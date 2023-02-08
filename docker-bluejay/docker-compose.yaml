@@ -27,9 +27,9 @@ services:
     environment:
       - BLUEJAY_SERVICES_PREFIX=${SERVICES_PREFIX:?}
       - BLUEJAY_DNS_SUFFIX=${DNS_SUFFIX:?}
-    ports:
-      - '443:443'
-      - '80:80'
+    #ports:
+    #  - '443:443'
+    #  - '80:80'
     ulimits:
       nproc: 10240
       nofile:
@@ -92,7 +92,7 @@ services:
   # ================================================
   bluejay-reporter:
     container_name: bluejay-reporter
-    image: governify/reporter:v2.3.2
+    image: governify/reporter:v2.4.0
     environment:
       - DB_HOST=influxdb
       - NODE_ENV=production
@@ -130,7 +130,7 @@ services:
   # ================================================
   bluejay-collector-events:
     container_name: bluejay-collector-events
-    image: governify/collector-events:v1.11.0
+    image: governify/collector-events:v1.13.0
     environment:
       - NODE_ENV=production
       - PORT=80
@@ -186,7 +186,7 @@ services:
   # ================================================
   bluejay-scope-manager:
     container_name: bluejay-scope-manager
-    image: governify/scope-manager:v1.7.1
+    image: governify/scope-manager:v1.7.2
     environment:
       - PRIVATE_KEY=${PRIVATE_KEY}
       - NODE_ENV=production
@@ -206,7 +206,7 @@ services:
   # ================================================
   bluejay-join:
     container_name: bluejay-join
-    image: governify/join-bluejay:v1.3.0
+    image: governify/join-bluejay:v1.4.0
     environment:
       - PRIVATE_KEY=${PRIVATE_KEY}
       - KEY_GITHUB=${KEY_GITHUB}
