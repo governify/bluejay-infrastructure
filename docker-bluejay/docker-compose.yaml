@@ -50,7 +50,7 @@ services:
   ############### MICROSERVICES ############### 
   bluejay-render:
     container_name: bluejay-render
-    image: governify/render:v2.2.0
+    image: governify/render:v2.3.0
     environment:
       - NODE_ENV=production
       - PORT=80
@@ -61,6 +61,8 @@ services:
       - DEFAULT_CONTROLLER=http://bluejay-assets-manager/api/v1/public/renders/index/controller.js
       - DEFAULT_MODEL=http://bluejay-assets-manager/api/v1/public/renders/index/model.json
       - GOV_INFRASTRUCTURE=${GOV_INFRASTRUCTURE:?}
+      - NEW_RELIC_APP_NAME="Bluejay-Render"
+      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
     networks:
       - governify-bluejay
     volumes:
@@ -72,7 +74,7 @@ services:
   # ================================================
   bluejay-assets-manager:
     container_name: bluejay-assets-manager
-    image: governify/assets-manager:v1.4.1
+    image: governify/assets-manager:v1.5.0
     environment:
       - NODE_ENV=production
       - PORT=80
@@ -83,6 +85,8 @@ services:
       - DNS_SUFFIX=${DNS_SUFFIX:?}
       - ASSETS_REPOSITORY=https://github.com/governify/assets-bluejay
       - ASSETS_REPOSITORY_BRANCH=${ASSETS_REPOSITORY_BRANCH:?}
+      - NEW_RELIC_APP_NAME="Bluejay-Assets-Manager"
+      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
     networks:
       - governify-bluejay
     volumes:
@@ -92,12 +96,14 @@ services:
   # ================================================
   bluejay-reporter:
     container_name: bluejay-reporter
-    image: governify/reporter:v2.4.0
+    image: governify/reporter:v2.5.0
     environment:
       - DB_HOST=influxdb
       - NODE_ENV=production
       - PORT=80
       - GOV_INFRASTRUCTURE=${GOV_INFRASTRUCTURE:?}
+      - NEW_RELIC_APP_NAME="Bluejay-Reporter"
+      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
     networks:
       - governify-bluejay
     volumes:
@@ -111,7 +117,7 @@ services:
   # ================================================
   bluejay-registry:
     container_name: bluejay-registry
-    image: governify/registry:v3.5.0
+    image: governify/registry:v3.7.0
     networks:
       - governify-bluejay
     environment:
@@ -119,6 +125,8 @@ services:
       - NODE_ENV=production
       - PORT=80
       - GOV_INFRASTRUCTURE=${GOV_INFRASTRUCTURE:?}
+      - NEW_RELIC_APP_NAME="Bluejay-Registry"
+      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
     volumes:
       - '../logs/registry:/opt/app/logs'
       - '../static:/opt/app/public/static'
@@ -130,7 +138,7 @@ services:
   # ================================================
   bluejay-collector-events:
     container_name: bluejay-collector-events
-    image: governify/collector-events:v1.14.0
+    image: governify/collector-events:v1.15.0
     environment:
       - NODE_ENV=production
       - PORT=80
@@ -143,6 +151,8 @@ services:
       - KEY_HEROKU=${KEY_HEROKU}
       - KEY_CODECLIMATE=${KEY_CODECLIMATE}
       - GOV_INFRASTRUCTURE=${GOV_INFRASTRUCTURE:?}
+      - NEW_RELIC_APP_NAME="Bluejay-Collector-Events"
+      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
     networks:
       - governify-bluejay
     depends_on:
@@ -170,13 +180,15 @@ services:
   # ================================================
   bluejay-director:
     container_name: bluejay-director
-    image: governify/director:v1.4.0
+    image: governify/director:v1.5.0
     environment:
       - NODE_ENV=production
       - PORT=80
       - KEY_ASSETS_MANAGER_PRIVATE=${KEY_ASSETS_MANAGER_PRIVATE}
       - GOV_INFRASTRUCTURE=${GOV_INFRASTRUCTURE:?}
       - INFLUXDB_BIND_ADDRESS=:8088
+      - NEW_RELIC_APP_NAME="Bluejay-Director"
+      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
     networks:
       - governify-bluejay
     depends_on:
@@ -186,7 +198,7 @@ services:
   # ================================================
   bluejay-scope-manager:
     container_name: bluejay-scope-manager
-    image: governify/scope-manager:v1.7.2
+    image: governify/scope-manager:v1.8.0
     environment:
       - PRIVATE_KEY=${PRIVATE_KEY}
       - NODE_ENV=production
@@ -197,6 +209,8 @@ services:
       - KEY_PIVOTAL=${KEY_PIVOTAL}
       - KEY_GITHUB=${KEY_GITHUB}
       - GOV_INFRASTRUCTURE=${GOV_INFRASTRUCTURE:?}
+      - NEW_RELIC_APP_NAME="Bluejay-Scope-Manager"
+      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
     networks:
       - governify-bluejay
     depends_on:
@@ -206,12 +220,14 @@ services:
   # ================================================
   bluejay-join:
     container_name: bluejay-join
-    image: governify/join-bluejay:v1.4.0
+    image: governify/join-bluejay:v1.5.0
     environment:
       - PRIVATE_KEY=${PRIVATE_KEY}
       - KEY_GITHUB=${KEY_GITHUB}
       - NODE_ENV=production
       - PORT=80
+      - NEW_RELIC_APP_NAME="Bluejay-Join"
+      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
     networks:
       - governify-bluejay
     mem_limit: 400m
