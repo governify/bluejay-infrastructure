@@ -158,7 +158,7 @@ services:
     depends_on:
       - bluejay-assets-manager
       - bluejay-redis-ec
-    mem_limit: 700m
+    # mem_limit: 700m
     restart: 'unless-stopped'
   # ================================================
   bluejay-dashboard:
