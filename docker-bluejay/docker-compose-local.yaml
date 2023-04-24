@@ -1,5 +1,18 @@
 version: '2.2'
 services:
+  # Exporter (exporters defined here are external to Bluejay infrastructure)
+  governify-states-exporter:
+    container_name: governify-states-exporter
+    image: alesancor1/governify-states-exporter
+    environment:
+      - MONGO_URL=mongodb://bluejay-mongo-registry:27017
+      - NODE_ENV=production
+      - PORT=80
+    ports:
+      - '5900:80'
+    networks:
+      - governify-bluejay
+
   ############### MICROSERVICES ############### 
   bluejay-render:
     container_name: bluejay-render
