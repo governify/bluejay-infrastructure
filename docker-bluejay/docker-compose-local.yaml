@@ -10,8 +10,6 @@ services:
       - PORT=80
     ports:
       - '5900:80'
-    networks:
-      - governify-bluejay
 
   ############### MICROSERVICES ############### 
   bluejay-render:
