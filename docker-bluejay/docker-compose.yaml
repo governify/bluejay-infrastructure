@@ -230,7 +230,7 @@ services:
   # ================================================
   bluejay-join:
     container_name: bluejay-join
-    image: governify/join-bluejay:v1.9.0
+    image: governify/join-bluejay:v1.9.1
     environment:
       - PRIVATE_KEY=${PRIVATE_KEY}
       - KEY_GITHUB=${KEY_GITHUB}
