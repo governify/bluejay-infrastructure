@@ -106,7 +106,7 @@ services:
   # ================================================
   bluejay-reporter:
     container_name: bluejay-reporter
-    image: governify/reporter:v2.8.0
+    image: governify/reporter:v2.9.0
     environment:
       - DB_HOST=influxdb
       - NODE_ENV=production
