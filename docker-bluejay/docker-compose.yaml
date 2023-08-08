@@ -148,7 +148,7 @@ services:
   # ================================================
   bluejay-collector-events:
     container_name: bluejay-collector-events
-    image: governify/collector-events:v1.19.0
+    image: governify/collector-events:v1.19.1
     environment:
       - NODE_ENV=production
       - PORT=80
