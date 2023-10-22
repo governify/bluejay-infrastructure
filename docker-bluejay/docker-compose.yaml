@@ -263,6 +263,21 @@ services:
       - 'bluejay-redis-ec-volume:/data'
     mem_limit: 1200m
     restart: 'unless-stopped'
+  # ================================================
+  bluejay-tpa-designer:
+    container_name: bluejay-tpa-designer
+    image: 'governify/tpa-designer:v1.0.0'
+    environment:
+      - NODE_ENV=production
+      # - PORT=80
+      - ASSETS_MANAGER_URL=${ASSETS_MANAGER_URL}
+      - REGISTRY_URL=${REGISTRY_URL}
+      - SCOPE_MANAGER_URL=${SCOPE_MANAGER_URL}
+      - COLLECTOR_EVENTS_URL=${COLLECTOR_EVENTS_URL}
+    ports:
+      - '5173:5173'
+    mem_limit: 700m
+    restart: 'unless-stopped'
 volumes:
   bluejay-dashboard-volume: null
   bluejay-influx-reporter-volume: null
