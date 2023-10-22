@@ -246,7 +246,7 @@ services:
   # ================================================
   bluejay-mongo-registry:
     container_name: bluejay-mongo-registry
-    image: mongo
+    image: mongo:6.0
     networks:
       - governify-bluejay
     volumes:
@@ -266,7 +266,7 @@ services:
   # ================================================
   bluejay-tpa-designer:
     container_name: bluejay-tpa-designer
-    image: 'governify/tpa-designer:v1.0.0'
+    image: 'governify/tpa-designer:1.0.0'
     environment:
       - NODE_ENV=production
       # - PORT=80
