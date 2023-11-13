@@ -199,6 +199,7 @@ services:
       - INFLUXDB_BIND_ADDRESS=:8088
       - NEW_RELIC_APP_NAME="Bluejay-Director"
       - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
     networks:
       - governify-bluejay
     depends_on:

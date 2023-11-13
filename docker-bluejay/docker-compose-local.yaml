@@ -137,6 +137,7 @@ services:
       - PORT=80
       - KEY_ASSETS_MANAGER_PRIVATE=${KEY_ASSETS_MANAGER_PRIVATE}
       - GOV_INFRASTRUCTURE=${GOV_INFRASTRUCTURE:?}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
     ports:
       - '5800:80'
     depends_on:
