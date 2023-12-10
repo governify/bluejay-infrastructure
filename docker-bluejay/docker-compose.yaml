@@ -148,7 +148,7 @@ services:
   # ================================================
   bluejay-collector-events:
     container_name: bluejay-collector-events
-    image: governify/collector-events:v1.19.1
+    image: governify/collector-events:v1.20.0
     environment:
       - NODE_ENV=production
       - PORT=80
@@ -190,6 +190,7 @@ services:
   # ================================================
   bluejay-director:
     container_name: bluejay-director
+    #image: governify/director:develop
     image: governify/director:v1.5.0
     environment:
       - NODE_ENV=production
@@ -199,6 +200,7 @@ services:
       - INFLUXDB_BIND_ADDRESS=:8088
       - NEW_RELIC_APP_NAME="Bluejay-Director"
       - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
     networks:
       - governify-bluejay
     depends_on:
@@ -256,7 +258,7 @@ services:
   # ================================================
   bluejay-mongo-registry:
     container_name: bluejay-mongo-registry
-    image: mongo
+    image: mongo:6.0
     networks:
       - governify-bluejay
     volumes:
@@ -272,6 +274,20 @@ services:
     volumes:
       - 'bluejay-redis-ec-volume:/data'
     mem_limit: 1200m
+    restart: 'unless-stopped'
+  # ================================================
+  bluejay-tpa-designer:
+    container_name: bluejay-tpa-designer
+    image: 'governify/tpa-designer:1.0.0'
+    environment:
+      - NODE_ENV=production
+      - ASSETS_MANAGER_URL=${ASSETS_MANAGER_URL}
+      - REGISTRY_URL=${REGISTRY_URL}
+      - SCOPE_MANAGER_URL=${SCOPE_MANAGER_URL}
+      - COLLECTOR_EVENTS_URL=${COLLECTOR_EVENTS_URL}
+    networks:
+      - governify-bluejay
+    mem_limit: 700m
     restart: 'unless-stopped'
 volumes:
   bluejay-dashboard-volume: null
