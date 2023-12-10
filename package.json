@@ -23,6 +23,7 @@
     "mocha": "^8.4.0"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "governify-commons": "^1.16.0"
   }
 }
