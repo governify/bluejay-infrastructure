@@ -211,6 +211,20 @@ services:
       - "5003:6379"
     mem_limit: 1200m
     restart: 'unless-stopped'
+      # ================================================
+  bluejay-tpa-designer:
+    container_name: bluejay-tpa-designer
+    image: 'governify/tpa-designer:1.0.0'
+    environment:
+      - NODE_ENV=production
+      - ASSETS_MANAGER_URL=${ASSETS_MANAGER_URL}
+      - REGISTRY_URL=${REGISTRY_URL}
+      - SCOPE_MANAGER_URL=${SCOPE_MANAGER_URL}
+      - COLLECTOR_EVENTS_URL=${COLLECTOR_EVENTS_URL}
+    mem_limit: 700m
+    restart: 'unless-stopped'
+    ports:
+      - "5173:5173"
 volumes:
   bluejay-influx-reporter-volume: null
   bluejay-mongo-registry-volume: null
