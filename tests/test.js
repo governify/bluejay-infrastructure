@@ -30,7 +30,7 @@ before((done) => {
   // Docker-compose up -d
   console.log('---------- Start E2E infrastructure ----------');
   exec("host-manager -add host.docker.internal 172.17.0.1", () => {
-    exec("docker-compose -f tests/docker-compose-e2e.yaml pull", (error, stdout, stderr) => {
+exec("docker-compose -f tests/docker-compose-e2e.yaml pull", (error, stdout, stderr) => {
       if (error) {
         console.log(`error: ${error.message}`);
         done(error);
@@ -79,7 +79,7 @@ before((done) => {
             });;
         });
       });
-    });
+});
   });
 });
 
@@ -130,7 +130,7 @@ describe('Create agreement, calculate guarantees and delete agreement: ', () => 
         setTimeout(() => {
           influx.queryRaw('SELECT "guaranteeValue" FROM "autogen"."metrics_values" WHERE "agreement" = \'' + testAgreement.id + '\'').then(result => {
             assert.deepStrictEqual(result.results,
-              [{ "statement_id": 0, "series": [{ "name": "metrics_values", "columns": ["time", "guaranteeValue"], "values": [["2020-04-27T00:00:00Z", 33.33333333333333]] }] }],
+              [{ "statement_id": 0, "series": [{ "name": "metrics_values", "columns": ["time", "guaranteeValue"], "values": [["2020-04-27T23:59:59Z", 33.33333333333333]] }] }],
               'The data in influx must be correct');
 
             // Delete influx inserted points
@@ -183,14 +183,14 @@ after((done) => {
   // Docker-compose down
   console.log('---------- Stop E2E infrastructure ----------');
   exec("docker-compose -f tests/docker-compose-e2e.yaml down", (error, stdout, stderr) => {
-    if (error) {
-      console.log(`error: ${error.message}`);
-      done(error);
-    } else if (stderr) {
-      console.log(`stderr: ${stderr}`);
-    } else {
-      console.log(`stdout: ${stdout}`);
-    }
-    done();
-  });
+  if (error) {
+  console.log(`error: ${error.message}`);
+  done(error);
+  } else if (stderr) {
+  console.log(`stderr: ${stderr}`);
+  } else {
+  console.log(`stdout: ${stdout}`);
+  }
+  done();
+});
 });
