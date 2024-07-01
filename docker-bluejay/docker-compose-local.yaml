@@ -182,7 +182,7 @@ services:
   # ================================================
   bluejay-mongo-registry:
     container_name: bluejay-mongo-registry
-    image: mongo
+    image: mongo:6.0
     volumes:
       - 'bluejay-mongo-registry-volume:/data/db'
     ports:
