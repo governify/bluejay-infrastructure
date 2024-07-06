@@ -127,7 +127,7 @@ services:
   # ================================================
   bluejay-registry:
     container_name: bluejay-registry
-    image: governify/registry:v3.7.0
+    image: governify/registry:v3.8.0
     networks:
       - governify-bluejay
     environment:
@@ -173,7 +173,7 @@ services:
   # ================================================
   bluejay-dashboard:
     container_name: bluejay-dashboard
-    image: governify/dashboard:latest
+    image: governify/dashboard:v1.1.0
     environment:
       - NODE_ENV=production
       - INFLUX_URL=http://bluejay-influx-reporter:8086
@@ -232,7 +232,7 @@ services:
   # ================================================
   bluejay-join:
     container_name: bluejay-join
-    image: governify/join-bluejay:v1.9.1
+    image: governify/join-bluejay:v1.10.0
     environment:
       - PRIVATE_KEY=${PRIVATE_KEY}
       - KEY_GITHUB=${KEY_GITHUB}
