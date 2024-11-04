@@ -148,7 +148,7 @@ services:
   # ================================================
   bluejay-collector-events:
     container_name: bluejay-collector-events
-    image: governify/collector-events:v1.20.0
+    image: governify/collector-events:v1.22.3
     environment:
       - NODE_ENV=production
       - PORT=80
@@ -276,9 +276,9 @@ services:
     mem_limit: 1200m
     restart: 'unless-stopped'
   # ================================================
-  bluejay-tpa-designer:
-    container_name: bluejay-tpa-designer
-    image: 'governify/tpa-designer:1.0.0'
+  bluejay-tpa-manager:
+    container_name: bluejay-tpa-manager
+    image: 'governify/tpa-manager:v2.0.0'
     environment:
       - NODE_ENV=production
       - ASSETS_MANAGER_URL=${ASSETS_MANAGER_URL}
