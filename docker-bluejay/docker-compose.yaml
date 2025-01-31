@@ -232,17 +232,18 @@ services:
   # ================================================
   bluejay-join:
     container_name: bluejay-join
-    image: governify/join-bluejay:v1.10.0
-    environment:
-      - VITE_SCOPE_URL=${SCOPE_MANAGER_URL}
-      - VITE_REGISTRY_URL=${REGISTRY_URL}
-      - VITE_INTERNAL_ASSETS_URL=${INTERNAL_ASSETS_URL}
-      - VITE_INTERNAL_SCOPE_URL=${INTERNAL_SCOPE_URL}
-      - VITE_RENDER_URL=${RENDER_URL}
-      - VITE_DASHBOARD_URL=${DASHBOARD_URL}
-      - VITE_REPORTER_URL=${REPORTER_URL}
-      - VITE_DIRECTOR_URL=${DIRECTOR_URL}
-      - VITE_ASSETS_URL=${ASSETS_MANAGER_URL}
+    build:
+      context: https://github.com/governify/join-bluejay.git
+      args:
+        VITE_SCOPE_URL: ${SCOPE_MANAGER_URL}
+        VITE_REGISTRY_URL: ${REGISTRY_URL}
+        VITE_INTERNAL_ASSETS_URL: ${INTERNAL_ASSETS_URL}
+        VITE_INTERNAL_SCOPE_URL: ${INTERNAL_SCOPE_URL}
+        VITE_RENDER_URL: ${RENDER_URL}
+        VITE_DASHBOARD_URL: ${DASHBOARD_URL}
+        VITE_REPORTER_URL: ${REPORTER_URL}
+        VITE_DIRECTOR_URL: ${DIRECTOR_URL}
+        VITE_ASSETS_URL: ${ASSETS_MANAGER_URL}
     networks:
       - governify-bluejay
     mem_limit: 400m
@@ -250,15 +251,15 @@ services:
   # ================================================
   bluejay-tpa-manager:
     container_name: bluejay-tpa-manager
-    image: 'governify/tpa-manager:v2.0.0'
-    environment:
-      - NODE_ENV=production
-      - ASSETS_MANAGER_URL=${ASSETS_MANAGER_URL}
-      - REGISTRY_URL=${REGISTRY_URL}
-      - SCOPE_MANAGER_URL=${SCOPE_MANAGER_URL}
-      - COLLECTOR_EVENTS_URL=${COLLECTOR_EVENTS_URL}
-      - DASHBOARD_URL=${DASHBOARD_URL}
-      - DIRECTOR_URL=${DIRECTOR_URL}
+    build:
+      context: https://github.com/governify/TPA-Manager.git # Currently develop branch, future releases will be in main
+      args:
+        VITE_ASSETS_MANAGER_URL: ${ASSETS_MANAGER_URL}
+        VITE_REGISTRY_URL: ${REGISTRY_URL}
+        VITE_SCOPE_MANAGER_URL: ${SCOPE_MANAGER_URL}
+        VITE_COLLECTOR_EVENTS_URL: ${COLLECTOR_EVENTS_URL}
+        VITE_DASHBOARD_URL: ${DASHBOARD_URL}
+        VITE_DIRECTOR_URL: ${DIRECTOR_URL}
     networks:
       - governify-bluejay
     mem_limit: 700m
