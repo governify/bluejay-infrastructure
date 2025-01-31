@@ -10,7 +10,7 @@ services:
       - PORT=80
     networks:
       - governify-bluejay
-  
+  # ================================================
   bluejay-nginx-exporter:
     container_name: bluejay-nginx-exporter
     image: quay.io/martinhelmich/prometheus-nginxlog-exporter:v1
@@ -234,15 +234,34 @@ services:
     container_name: bluejay-join
     image: governify/join-bluejay:v1.10.0
     environment:
-      - PRIVATE_KEY=${PRIVATE_KEY}
-      - KEY_GITHUB=${KEY_GITHUB}
-      - NODE_ENV=production
-      - PORT=80
-      - NEW_RELIC_APP_NAME="Bluejay-Join"
-      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
+      - VITE_SCOPE_URL=${SCOPE_MANAGER_URL}
+      - VITE_REGISTRY_URL=${REGISTRY_URL}
+      - VITE_INTERNAL_ASSETS_URL=${INTERNAL_ASSETS_URL}
+      - VITE_INTERNAL_SCOPE_URL=${INTERNAL_SCOPE_URL}
+      - VITE_RENDER_URL=${RENDER_URL}
+      - VITE_DASHBOARD_URL=${DASHBOARD_URL}
+      - VITE_REPORTER_URL=${REPORTER_URL}
+      - VITE_DIRECTOR_URL=${DIRECTOR_URL}
+      - VITE_ASSETS_URL=${ASSETS_MANAGER_URL}
     networks:
       - governify-bluejay
     mem_limit: 400m
+    restart: 'unless-stopped'
+  # ================================================
+  bluejay-tpa-manager:
+    container_name: bluejay-tpa-manager
+    image: 'governify/tpa-manager:v2.0.0'
+    environment:
+      - NODE_ENV=production
+      - ASSETS_MANAGER_URL=${ASSETS_MANAGER_URL}
+      - REGISTRY_URL=${REGISTRY_URL}
+      - SCOPE_MANAGER_URL=${SCOPE_MANAGER_URL}
+      - COLLECTOR_EVENTS_URL=${COLLECTOR_EVENTS_URL}
+      - DASHBOARD_URL=${DASHBOARD_URL}
+      - DIRECTOR_URL=${DIRECTOR_URL}
+    networks:
+      - governify-bluejay
+    mem_limit: 700m
     restart: 'unless-stopped'
   ############### DATABASES ###############
   bluejay-influx-reporter:
@@ -276,19 +295,6 @@ services:
     mem_limit: 1200m
     restart: 'unless-stopped'
   # ================================================
-  bluejay-tpa-manager:
-    container_name: bluejay-tpa-manager
-    image: 'governify/tpa-manager:v2.0.0'
-    environment:
-      - NODE_ENV=production
-      - ASSETS_MANAGER_URL=${ASSETS_MANAGER_URL}
-      - REGISTRY_URL=${REGISTRY_URL}
-      - SCOPE_MANAGER_URL=${SCOPE_MANAGER_URL}
-      - COLLECTOR_EVENTS_URL=${COLLECTOR_EVENTS_URL}
-    networks:
-      - governify-bluejay
-    mem_limit: 700m
-    restart: 'unless-stopped'
 volumes:
   bluejay-dashboard-volume: null
   bluejay-influx-reporter-volume: null

@@ -1,5 +1,7 @@
 version: '2.2'
 services:
+
+  ############### MICROSERVICES ############### 
   # Exporter (exporters defined here are external to Bluejay infrastructure)
   governify-states-exporter:
     container_name: governify-states-exporter
@@ -10,8 +12,7 @@ services:
       - PORT=80
     ports:
       - '5900:80'
-
-  ############### MICROSERVICES ############### 
+  # ================================================
   bluejay-render:
     container_name: bluejay-render
     image: governify/render:develop
@@ -169,14 +170,35 @@ services:
     container_name: bluejay-join
     image: 'governify/join-bluejay:develop'
     environment:
-      - PRIVATE_KEY=${PRIVATE_KEY}
-      - KEY_GITHUB=${KEY_GITHUB}
-      - NODE_ENV=development
-      - PORT=80
+      - VITE_SCOPE_URL=http://localhost:5700
+      - VITE_REGISTRY_URL=http://localhost:5400
+      - VITE_INTERNAL_ASSETS_URL=http://host.docker.internal:5200
+      - VITE_INTERNAL_SCOPE_URL=http://host.docker.internal:5700
+      - VITE_RENDER_URL=http://localhost:5100
+      - VITE_DASHBOARD_URL=http://localhost:5600
+      - VITE_REPORTER_URL=http://localhost:5300
+      - VITE_DIRECTOR_URL=http://localhost:5800
+      - VITE_ASSETS_URL=http://localhost:5200
     ports:
       - '6001:80'
     mem_limit: 400m
     restart: 'unless-stopped'
+  # ================================================
+  bluejay-tpa-manager:
+    container_name: bluejay-tpa-manager
+    image: 'governify/tpa-manager:develop'
+    environment:
+      - NODE_ENV=production
+      - ASSETS_MANAGER_URL=${ASSETS_MANAGER_URL}
+      - REGISTRY_URL=${REGISTRY_URL}
+      - SCOPE_MANAGER_URL=${SCOPE_MANAGER_URL}
+      - COLLECTOR_EVENTS_URL=${COLLECTOR_EVENTS_URL}
+      - DASHBOARD_URL=http://localhost:5600
+      - DIRECTOR_URL=http://localhost:5800
+    mem_limit: 700m
+    restart: 'unless-stopped'
+    ports:
+      - "5173:80"
   ############### DATABASES ###############
   bluejay-influx-reporter:
     image: 'influxdb:1.8.4-alpine'
@@ -194,7 +216,7 @@ services:
   # ================================================
   bluejay-mongo-registry:
     container_name: bluejay-mongo-registry
-    image: mongo
+    image: mongo:6.0
     volumes:
       - 'bluejay-mongo-registry-volume:/data/db'
     ports:
@@ -211,20 +233,8 @@ services:
       - "5003:6379"
     mem_limit: 1200m
     restart: 'unless-stopped'
-      # ================================================
-  bluejay-tpa-manager:
-    container_name: bluejay-tpa-manager
-    image: 'governify/tpa-manager:develop'
-    environment:
-      - NODE_ENV=production
-      - ASSETS_MANAGER_URL=${ASSETS_MANAGER_URL}
-      - REGISTRY_URL=${REGISTRY_URL}
-      - SCOPE_MANAGER_URL=${SCOPE_MANAGER_URL}
-      - COLLECTOR_EVENTS_URL=${COLLECTOR_EVENTS_URL}
-    mem_limit: 700m
-    restart: 'unless-stopped'
-    ports:
-      - "5173:5173"
+  # ================================================
+  
 volumes:
   bluejay-influx-reporter-volume: null
   bluejay-mongo-registry-volume: null
