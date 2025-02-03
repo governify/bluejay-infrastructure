@@ -169,7 +169,7 @@ services:
   bluejay-join:
     container_name: bluejay-join
     build:
-      context: https://github.com/governify/join-bluejay.git
+      context: https://github.com/governify/join-bluejay.git#develop
       # context: ../join-bluejay
       args:
         VITE_SCOPE_URL: http://localhost:5700
@@ -188,9 +188,8 @@ services:
   # ================================================
   bluejay-tpa-manager:
     container_name: bluejay-tpa-manager
-
     build:
-      context: https://github.com/governify/TPA-Manager.git # Currently develop branch, future releases will be in main, this URL could change
+      context: https://github.com/governify/TPA-Manager.git#develop # Currently develop branch, future releases will be in main, this URL could change
       # context: ../tpa-manager # this can be changed to a GitHub repository
       args:
         VITE_ASSETS_MANAGER_URL: http://localhost:5200
@@ -199,7 +198,7 @@ services:
         VITE_COLLECTOR_EVENTS_URL: http://localhost:5500
         VITE_DASHBOARD_URL: http://localhost:5600
         VITE_DIRECTOR_URL: http://localhost:5800
-
+        VITE_REPORTER_URL: http://localhost:5300
     mem_limit: 700m
     restart: 'unless-stopped'
     ports:
