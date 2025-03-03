@@ -168,19 +168,9 @@ services:
   # ================================================
   bluejay-join:
     container_name: bluejay-join
-    build:
-      context: https://github.com/governify/join-bluejay.git#develop
-      # context: ../join-bluejay
-      args:
-        VITE_SCOPE_URL: http://localhost:5700
-        VITE_REGISTRY_URL: http://localhost:5400
-        VITE_INTERNAL_ASSETS_URL: http://host.docker.internal:5200
-        VITE_INTERNAL_SCOPE_URL: http://host.docker.internal:5700
-        VITE_RENDER_URL: http://localhost:5100
-        VITE_DASHBOARD_URL: http://localhost:5600
-        VITE_REPORTER_URL: http://localhost:5300
-        VITE_DIRECTOR_URL: http://localhost:5800
-        VITE_ASSETS_URL: http://localhost:5200
+    image: 'governify/join-bluejay:develop'
+    volumes:
+      - '../config.join.json:/usr/share/nginx/html/config.json'
     ports:
       - '6001:80'
     mem_limit: 400m
@@ -188,17 +178,9 @@ services:
   # ================================================
   bluejay-tpa-manager:
     container_name: bluejay-tpa-manager
-    build:
-      context: https://github.com/governify/TPA-Manager.git#develop # Currently develop branch, future releases will be in main, this URL could change
-      # context: ../tpa-manager # this can be changed to a GitHub repository
-      args:
-        VITE_ASSETS_MANAGER_URL: http://localhost:5200
-        VITE_REGISTRY_URL: http://localhost:5400
-        VITE_SCOPE_MANAGER_URL: http://localhost:5700
-        VITE_COLLECTOR_EVENTS_URL: http://localhost:5500
-        VITE_DASHBOARD_URL: http://localhost:5600
-        VITE_DIRECTOR_URL: http://localhost:5800
-        VITE_REPORTER_URL: http://localhost:5300
+    image: 'governify/tpa-manager:develop'
+    volumes:
+      - '../config.tpa-manager.json:/usr/share/nginx/html/config.json'
     mem_limit: 700m
     restart: 'unless-stopped'
     ports:
