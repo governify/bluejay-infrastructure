@@ -165,6 +165,19 @@ services:
       - bluejay-assets-manager
     mem_limit: 400m
     restart: 'unless-stopped'
+# ================================================
+  bluejay-notificator:
+    container_name: bluejay-notificator
+    image: 'governify/notificator:develop'
+    environment:
+      - PORT=80
+      - GOV_INFRASTRUCTURE=${GOV_INFRASTRUCTURE:?}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - FROM_EMAIL=${FROM_EMAIL}
+    ports:
+      - '6100:80'
+    mem_limit: 400m
+    restart: 'unless-stopped'
   # ================================================
   bluejay-join:
     container_name: bluejay-join
