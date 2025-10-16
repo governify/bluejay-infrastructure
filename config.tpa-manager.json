@@ -6,6 +6,7 @@
     "VITE_DIRECTOR_URL": "http://localhost:5800",
     "VITE_ASSETS_MANAGER_URL": "http://localhost:5200",
     "VITE_SCOPE_MANAGER_URL": "http://localhost:5700",
+    "VITE_ASSETS_MANAGER_INTERNAL_URL": "http://bluejay-assets-manager:80",
     "testVariable": "testValue"
   }
   
